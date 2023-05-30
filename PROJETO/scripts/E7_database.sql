@@ -81,3 +81,12 @@ CREATE TABLE VisitanteVisita (
     FOREIGN KEY (idVisitante) REFERENCES Visitante(idPessoa),
     FOREIGN KEY (idVisita) REFERENCES Visita(id)
 );
+
+CREATE TRIGGER Insert_Pessoa
+BEFORE INSERT ON Pessoa
+FOR EACH ROW 
+	BEGIN
+		IF NEW.dtaNascimento > CURDATE()	THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data inválida";
+		END IF
+	END;
