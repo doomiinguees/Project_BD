@@ -42,7 +42,7 @@ CREATE TABLE Contacto (
 
 CREATE TABLE Categoria (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    funcao ENUM('Diretor', 'Animador', 'Técnica de Ação Social', 'Ajudante de Ação Direta')
+    funcao ENUM('Diretor', 'Animador', 'Técnico de Ação Social', 'Auxiliar de Ação Direta', 'Auxiliar de Serviços Gerais') NOT NULL
 );
 
 CREATE TABLE Acolhimento (
