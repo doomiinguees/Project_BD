@@ -18,4 +18,36 @@ INSERT INTO categoria (`funcao`)
         ('Auxiliar de Serviços Gerais'),
         ('Auxiliar de Ação Direta');
 
--- INSERT INTO funcionario ()
+INSERT INTO funcionario (`salario`,`dtacontrato`)
+	values
+        ('1200', '2004-05-25'),
+        ('1000', '2005-04-28'),
+        ('900', '2015-01-21-'),
+        ('1500', '2004-01-12'),
+        ('1300', '2008-02-24'),
+        ('1250','2009-11-11'),
+		('1150', '2010-09-25'),
+        ('1100', '2007-07-15funcionario');
+        
+INSERT INTO sala (`edificio`,`andar`,`porta`)
+	values
+		('A', '1', '12'),
+        ('A', '2', '6'),
+        ('B', '1', '5'),
+        ('B', '2', '4'),
+        ('C', '1', '8'),
+      
+        
+insert INTO Contacto (`telemovel`)
+	values
+        ('456369789'),
+        ('963852741'),
+        ('987654321'),
+        ('789456123'),
+        ('789236589');
+        
+INSERT INTO utente (`dtaentrada`)
+	values
+    
+    
+    
