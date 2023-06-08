@@ -57,9 +57,11 @@ CREATE TABLE Visita (
     idUtente INT NOT NULL,
     idSala INT NOT NULL,
     idTipoVisita INT NOT NULL,
+    idFuncionario INT NOT NULL,
     FOREIGN KEY (idUtente) REFERENCES Utente(idPessoa),
     FOREIGN KEY (idSala) REFERENCES Sala(id),
-    FOREIGN KEY (idTipoVisita) REFERENCES TipoVisita(id)
+    FOREIGN KEY (idTipoVisita) REFERENCES TipoVisita(id),
+    FOREIGN KEY (idFuncionario) REFERENCES funcionario(idPessoa)
 );
 
 CREATE TABLE TipoVisita (
@@ -82,11 +84,28 @@ CREATE TABLE VisitanteVisita (
     FOREIGN KEY (idVisita) REFERENCES Visita(id)
 );
 
+DELIMITER $$
 CREATE TRIGGER Insert_Pessoa
-	BEFORE INSERT ON Pessoa
-	FOR EACH ROW 
-		BEGIN
-			IF NEW.dtaNascimento > CURDATE()	THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data inválida";
-			END IF;
-		END;
+BEFORE INSERT ON Pessoa
+FOR EACH ROW 
+	BEGIN
+		IF	NEW.dtaNascimento > CURDATE()	THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data inválida";
+		END IF;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER Update_Pessoa
+BEFORE UPDATE ON Pessoa
+FOR EACH ROW 
+	BEGIN
+		IF NEW.dtaNascimento > CURDATE()	THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data inválida";
+		END IF;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+
+DELIMITER ;
