@@ -1,3 +1,12 @@
+/*
+TeSP_PSI_22_23_CDBD
+Sistema de Gestão de Visitas de Crianças e Jovens Institicionalizados
+David Domingues, estudante n.º 2220897
+Hugo Gomes, estudante n.º 2220893
+Ruben Soares, estudante n.º 2220900
+…
+*/
+
 DROP DATABASE IF EXISTS E7_Database;
 CREATE DATABASE E7_Database;
 
@@ -35,8 +44,9 @@ CREATE TABLE Visitante (
 );
 
 CREATE TABLE Contacto (
-    idVisitante INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    idVisitante INT NOT NULL,
     telemovel VARCHAR(20),
+    PRIMARY KEY (idVisitante, telemovel),
     FOREIGN KEY (idVisitante) REFERENCES Visitante(idPessoa)
 );
 
@@ -89,7 +99,7 @@ CREATE TRIGGER Insert_Pessoa
 BEFORE INSERT ON Pessoa
 FOR EACH ROW 
 	BEGIN
-		IF	NEW.dtaNascimento > CURDATE()	THEN
+		IF NEW.dtaNascimento > CURDATE()	THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data inválida";
 		END IF;
 	END$$
@@ -107,5 +117,49 @@ FOR EACH ROW
 DELIMITER ;
 
 DELIMITER $$
-
+CREATE TRIGGER Insert_Utente
+BEFORE INSERT ON Utente
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaEntrada < (SELECT dtaNascimento FROM pessoa WHERE id = NEW.idPessoa) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de entrada não pode ser menor que a de Nascimento";
+		END IF;
+    END$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER Update_Utente
+BEFORE UPDATE ON Utente
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaEntrada < (SELECT dtaNascimento FROM pessoa WHERE id = OLD.idPessoa) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de entrada não pode ser menor que a de Nascimento";
+		END IF;
+    END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER Insert_Funcionario
+BEFORE INSERT ON Funcionario
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaContrato < (SELECT dtaNascimento FROM pessoa WHERE id = NEW.idPessoa) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de contrato não pode ser menor que a de Nascimento";
+		END IF;
+    END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER Update_Funcionario
+BEFORE UPDATE ON Funcionario
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaContrato < (SELECT dtaNascimento FROM pessoa WHERE id = OLD.idPessoa) THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de contrato não pode ser menor que a de Nascimento";
+		END IF;
+    END$$
+DELIMITER ;
+
+/*DELIMITER $$
+	
+DELIMITER ;*/
