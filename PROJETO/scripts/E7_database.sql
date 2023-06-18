@@ -76,8 +76,8 @@ CREATE TABLE Visita (
 
 CREATE TABLE TipoVisita (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    tipo enum('Na Instituição', 'Saída de Curta Duração', 'Saída de Longa Duração'),
-    descricao VARCHAR(100)
+    tipo enum('Na Instituição', 'Saída de Curta Duração', 'Saída de Longa Duração') NOT NULL,
+    descricao VARCHAR(256)
 );
 
 CREATE TABLE Sala (
@@ -160,6 +160,13 @@ FOR EACH ROW
     END$$
 DELIMITER ;
 
-/*DELIMITER $$
-	
-DELIMITER ;*/
+DELIMITER $$
+CREATE TRIGGER Inser_Visita
+BEFORE INSERT ON visita
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaVisita < CURDATE() THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de visita não pode ser menor que a atual";
+		END IF;
+	END$$
+DELIMITER ;

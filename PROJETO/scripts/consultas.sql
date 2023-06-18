@@ -7,7 +7,7 @@ Ruben Soares, estudante n.º 2220900
 …
 */
 
--- Selecionar pessoas com o nome da tabela que herda cada ocorrencia
+-- Consultar os dados de da tabela Pessoa com o respetivo perfil
 SELECT
     p.*,
     CASE
@@ -18,19 +18,12 @@ SELECT
 FROM Pessoa p
 	LEFT JOIN Funcionario f ON p.id = f.idPessoa
 	LEFT JOIN Utente u ON p.id = u.idPessoa
-	LEFT JOIN Visitante v ON p.id = v.idPessoa;
-    
+	LEFT JOIN Visitante v ON p.id = v.idPessoa
+ORDER BY 6 ASC;
+
+-- consulta de visitas realizadas por ordem temporal
+
 -- Selecionar as views criadas
 SELECT * FROM v_selectfuncionario;
 SELECT * FROM v_selectutente;
-SELECT * FROM v_selectvisitante;
-
-
-
-
-
-
-
-
-
-
+SELECT * FROM v_SelectVisitante;

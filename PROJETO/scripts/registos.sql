@@ -9,44 +9,56 @@ Ruben Soares, estudante n.º 2220900
 
 INSERT INTO pessoa (`pnome`, `apelido`, `genero`, `dtanascimento`)
 	VALUES
-		('Deolinda', 'Gomes', 'Feminino', '1986-02-15'), -- f
-        ('David', 'Silva', 'Masculino', '1990-02-19'), -- f
-        ('Jose', 'Gomes', 'Masculino', '1976-12-11'), -- v
-        ('Maria', 'Pacheco', 'Feminino', '1990-08-08'), -- f
-        ('Marco', 'Ramos', 'Masculino', '2007-01-28'), -- u
-        ('Fabio','Serrano', 'Masculino', '2000-08-12'), -- v
-		('Fabiana', 'Varela', 'Feminino', '1990-03-08'), -- v
-        ('Luís', 'Madeira', 'Masculino', '2020-05-10'); -- u
+        ('Renato', 'Botelho', 'Masculino', '1971-02-25'), -- f1
+		('Inês', 'Gomes', 'Feminino', '1995-02-15'), -- f2
+        ('Tatiana', 'Martins', 'Feminino', '1998-08-08'), -- f3
+        ('Paula', 'Amaro', 'Feminino', '1967-02-19'), -- f4
+        ('Andreia', 'Gonçalves', 'Feminino', '1990-02-19'), -- f5
+        ('Jose', 'Gomes', 'Masculino', '1976-12-11'), -- v6
+        ('Fabio','Serrano', 'Masculino', '2000-08-12'), -- v7
+		('Fabiana', 'Varela', 'Feminino', '1985-03-08'), -- v8
+		('Silvia', 'Domingues', 'Feminino', '1990-03-08'), -- v9
+        ('Marco', 'Ramos', 'Masculino', '2007-01-28'), -- u10
+        ('Luís', 'Madeira', 'Masculino', '2020-05-10'), -- u11
+		('Túlia', 'Pereira', 'Feminino', '2016-10-08'), -- u12
+		('Jacinta', 'Afonso', 'Feminino', '2010-08-21'); -- u13
 
 INSERT INTO categoria (`funcao`) 
 	VALUES 
-		('Animador'),
         ('Diretor'),
+		('Animador'),
         ('Técnico de Ação Social'),
         ('Auxiliar de Serviços Gerais'),
         ('Auxiliar de Ação Direta');
 
-INSERT INTO acolhimento (id, delegacao, descricao)
+INSERT INTO acolhimento (delegacao, descricao)
 	VALUES
-		(1, 'CPCJ', 'Comissão de Proteção de Crianças e Jovens - Leiria'),
-        (2, 'Segurança Social', 'Serviços de Ação Social - Caldas da Rainha');
-
+		('CPCJ', 'Comissão de Proteção de Crianças e Jovens - Leiria'),
+        ('Segurança Social', 'Serviços de Ação Social - Caldas da Rainha'),
+        ('Segurança Social', 'Serviços de Ação Social - Leiria'),
+        ('Segurança Social', 'Serviços de Ação Social - Peniche');
+        
 INSERT INTO funcionario (idPessoa, salario, dtacontrato, idCategoria)
 	VALUES
-        (1, '1200', '2004-05-25', 2),
-        (2, '1000', '2005-04-28', 3),
-        (4, '900', '2015-01-21', 1);
+        (1, '1200', '2010-05-25', 1),
+        (2, '1050', '2018-04-28', 2),
+        (3, '1150', '2020-02-17', 3),
+        (4, '756.5', '2002-01-21', 4),
+        (5, '852', '2016-11-02', 5);
 
 INSERT INTO visitante (idpessoa, parentesco)
 	VALUES
-		(3, 'Pai'),
-        (6, 'Primo'),
-        (7, 'Mãe');
+		(6, 'Pai'),
+        (7, 'Primo'),
+        (8, 'Mãe'),
+        (9, 'Mãe');
 
 INSERT INTO utente (idPessoa, dtaEntrada, idAcolhimento)
 	VALUES
-		(5, '2010-04-14', 1),
-        (8, '2020-05-11', 2);
+		(10, '2009-04-14', 1),
+		(11, '2020-05-11', 4),
+		(12, '2020-12-20', 3),
+        (13, '2015-09-30', 2);
 
 INSERT INTO sala (`edificio`,`andar`,`porta`)
 	VALUES
@@ -58,6 +70,14 @@ INSERT INTO sala (`edificio`,`andar`,`porta`)
       
 INSERT INTO Contacto (idVisitante, telemovel)
 	VALUES
-        (3, '916369789'),
-        (3, '963852741');
+        (6, '916369789'),
+        (7, '926369789'),
+        (7, '925969789'),
+        (8, '916365009'),
+        (9, '922903564');
 
+INSERT INTO TipoVisita (tipo, descricao)
+	VALUES
+		('Na Instituição', 'Visita controlada por técnico/funcionário nas instalações da instituição'),
+		('Saída de Curta Duração', 'Criança/Jovem vai sair das instalações da intituição acompanhada do visitante com tempo de duração inferior a um dia'),
+		('Saída de Longa Duração', 'Criança/Jovem vai sair das instalações da intituição acompanhada do visitante com tempo de duração superior a um dia');
