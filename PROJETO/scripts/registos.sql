@@ -48,6 +48,7 @@ INSERT INTO funcionario (idPessoa, salario, dtacontrato, idCategoria)
 
 INSERT INTO visitante (idpessoa, parentesco)
 	VALUES
+		(5, 'Família de Apoio'),
 		(6, 'Pai'),
         (7, 'Primo'),
         (8, 'Mãe'),
@@ -60,8 +61,9 @@ INSERT INTO utente (idPessoa, dtaEntrada, idAcolhimento)
 		(12, '2020-12-20', 3),
         (13, '2015-09-30', 2);
 
-INSERT INTO sala (`edificio`,`andar`,`porta`)
+INSERT INTO sala (edificio, andar, porta)
 	VALUES
+		('0', '0', '0'),
 		('A', '1', '12'),
         ('A', '2', '6'),
         ('B', '1', '5'),
@@ -81,3 +83,17 @@ INSERT INTO TipoVisita (tipo, descricao)
 		('Na Instituição', 'Visita controlada por técnico/funcionário nas instalações da instituição'),
 		('Saída de Curta Duração', 'Criança/Jovem vai sair das instalações da intituição acompanhada do visitante com tempo de duração inferior a um dia'),
 		('Saída de Longa Duração', 'Criança/Jovem vai sair das instalações da intituição acompanhada do visitante com tempo de duração superior a um dia');
+        
+INSERT INTO visita (dtaVisita, idUtente, idSala, idTipoVisita, idFuncionario)
+	VALUES
+		('2023-06-19', 10, 3, 1, 2),
+        ('2023-05-30', 12, 1, 2, 1),
+        ('2022-10-10', 13, 1, 3, 3),
+        ('2022-12-23', 11, 1, 3, 2);
+        
+INSERT INTO visitanteVisita (idVisitante, idVisita)
+	VALUES
+		(9, 1),
+		(6, 2),
+		(8, 3),
+		(7, 4);

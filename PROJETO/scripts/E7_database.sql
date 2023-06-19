@@ -39,7 +39,7 @@ CREATE TABLE Utente (
 
 CREATE TABLE Visitante (
     idPessoa INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    parentesco VARCHAR(12) NOT NULL,
+    parentesco VARCHAR(20) NOT NULL,
     FOREIGN KEY (idPessoa) REFERENCES Pessoa(id)
 );
 
@@ -62,10 +62,10 @@ CREATE TABLE Acolhimento (
 );
 
 CREATE TABLE Visita (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     dtaVisita DATE NOT NULL,
     idUtente INT NOT NULL,
-    idSala INT NOT NULL,
+    idSala INT DEFAULT '0',
     idTipoVisita INT NOT NULL,
     idFuncionario INT NOT NULL,
     FOREIGN KEY (idUtente) REFERENCES Utente(idPessoa),
@@ -161,12 +161,23 @@ FOR EACH ROW
 DELIMITER ;
 
 DELIMITER $$
-CREATE TRIGGER Inser_Visita
+CREATE TRIGGER Insert_Visita
 BEFORE INSERT ON visita
 FOR EACH ROW
 	BEGIN
-		IF NEW.dtaVisita < CURDATE() THEN
+		IF NEW.dtaVisita > CURDATE() THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de visita não pode ser menor que a atual";
+		END IF;
+	END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER Update_Visita
+BEFORE 	UPDATE ON visita
+FOR EACH ROW
+	BEGIN
+		IF NEW.dtaVisita > CURDATE() THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Data de visita não pode ser maior que a atual";
 		END IF;
 	END$$
 DELIMITER ;

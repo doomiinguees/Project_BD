@@ -24,6 +24,7 @@ CREATE OR REPLACE VIEW v_SelectFuncionario AS
 			DATE_FORMAT(p.dtaNascimento, '%Y-%m-%d') AS dtaNascimento,
 			TIMESTAMPDIFF(YEAR, p.dtaNascimento, CURDATE()) AS Idade,
 			DATE_FORMAT(f.dtaContrato, '%Y-%m-%d') AS dtaContrato,
+			TIMESTAMPDIFF(YEAR, f.dtaContrato, CURDATE()) AS AnosDeContrato,
 			c.funcao
 	FROM Funcionario f
 	INNER JOIN Pessoa p ON f.idPessoa = p.id
@@ -54,5 +55,4 @@ GRANT ALL PRIVILEGES ON e7_database.* TO 'diretor'@'localhost' WITH GRANT OPTION
 -- Permissões para o user 'tasocial'
 GRANT SELECT ON v_SelectUtente TO 'tasocial'@'localhost';
 GRANT SELECT ON v_SelectVisitante TO 'tasocial'@'localhost';
-GRANT UPDATE ON v_SelectUtente TO 'tasocial'@'localhost';
-
+GRANT INSERT ON visita TO 'tasocial'@'localhost';
