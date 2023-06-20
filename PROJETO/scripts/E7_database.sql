@@ -45,7 +45,7 @@ CREATE TABLE Visitante (
 
 CREATE TABLE Contacto (
     idVisitante INT NOT NULL,
-    telemovel VARCHAR(20),
+    telemovel VARCHAR(20) UNIQUE,
     PRIMARY KEY (idVisitante, telemovel),
     FOREIGN KEY (idVisitante) REFERENCES Visitante(idPessoa)
 );

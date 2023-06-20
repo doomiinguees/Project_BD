@@ -10,7 +10,6 @@ Ruben Soares, estudante n.º 2220900
 -- Qual o tipo de acolhimento de cada utente?
 SELECT * FROM v_selectutente;
 
-
 -- Consultar os dados de da tabela Pessoa com o respetivo perfil
 SELECT
     p.*,
@@ -56,5 +55,50 @@ WHERE edificio != '0';
 SELECT * FROM v_selectfuncionario;
 
 
--- Selecionar as views criadas
+-- Qual a idade e o parentesco de cada visitante
 SELECT * FROM v_SelectVisitante;
+
+-- Total de visitas por tipo de visita
+SELECT tv.descricao AS TipoVisita, 
+    (
+        SELECT COUNT(*)
+        FROM Visita v
+        WHERE v.idTipoVisita = tv.id
+    ) AS TotalVisitas
+FROM TipoVisita tv;
+
+-- Consulta que apresenta dos dados da visita, com todos os valores substituidos pela informaçã adjacente ao id registado
+SELECT v.id, v.dtaVisita,
+       CONCAT(ut.pnome, ' ', ut.apelido) AS NomeUtente,
+       CONCAT(f.pnome, ' ', f.apelido) AS NomeFuncionario,
+       CONCAT(vi.pnome, ' ', vi.apelido) AS NomeVisitante,
+       CONCAT(s.edificio, '.', s.andar, '.', s.porta) AS Sala,
+       (SELECT descricao FROM TipoVisita WHERE id = v.idTipoVisita) AS TipoVisita
+FROM Visita v
+INNER JOIN Utente u ON v.idUtente = u.idPessoa
+INNER JOIN Pessoa ut ON u.idPessoa = ut.id
+INNER JOIN Funcionario fu ON v.idFuncionario = fu.idPessoa
+INNER JOIN Pessoa f ON fu.idPessoa = f.id
+INNER JOIN VisitanteVisita vv ON v.id = vv.idVisita
+INNER JOIN Pessoa vi ON vv.idVisitante = vi.id
+LEFT JOIN Sala s ON v.idSala = s.id
+ORDER BY year(dtaVisita) DESC;
+
+-- Número de visitas por ano
+SELECT EXTRACT(YEAR FROM dtaVisita) AS Ano, COUNT(*) AS NumVisitas
+FROM Visita
+GROUP BY Ano;
+
+-- Quantidade de visitas por faixa etária dos utentes
+SELECT CASE
+    WHEN TIMESTAMPDIFF(YEAR, p.dtaNascimento, CURDATE()) BETWEEN 0 AND 5 THEN ' 0 - 5 anos'
+    WHEN TIMESTAMPDIFF(YEAR, p.dtaNascimento, CURDATE()) BETWEEN 6 AND 12 THEN ' 6 - 12 anos'
+    WHEN TIMESTAMPDIFF(YEAR, p.dtaNascimento, CURDATE()) BETWEEN 13 AND 18 THEN '13 - 18 anos'
+    ELSE 'Maior de 18 anos'
+    END AS FaixaEtaria,
+    COUNT(*) AS NumVisitas
+FROM Visita v
+INNER JOIN Utente u ON v.idUtente = u.idPessoa
+INNER JOIN Pessoa p ON u.idPessoa = p.id
+GROUP BY FaixaEtaria
+ORDER BY FaixaEtaria ASC;
