@@ -6,8 +6,10 @@ Hugo Gomes, estudante n.º 2220893
 Ruben Soares, estudante n.º 2220900
 …
 */
--- Cração das Views
 
+USE e7_database;
+
+-- Cração das Views
 CREATE OR REPLACE VIEW v_SelectUtente AS
 	SELECT CONCAT(p.pnome, ' ', p.apelido) AS NomeCompleto,
 			DATE_FORMAT(p.dtaNascimento, '%Y-%m-%d') AS dtaNascimento,

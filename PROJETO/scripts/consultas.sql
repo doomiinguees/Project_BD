@@ -7,6 +7,7 @@ Ruben Soares, estudante n.º 2220900
 …
 */
 
+USE e7_database;
 -- Qual o tipo de acolhimento de cada utente?
 SELECT * FROM v_selectutente;
 
