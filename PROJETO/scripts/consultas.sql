@@ -22,7 +22,7 @@ FROM Pessoa p
 	LEFT JOIN Funcionario f ON p.id = f.idPessoa
 	LEFT JOIN Utente u ON p.id = u.idPessoa
 	LEFT JOIN Visitante v ON p.id = v.idPessoa
-ORDER BY 6 ASC;
+ORDER BY id ASC;
 
 -- consulta visitas de cada visitante com o respetivo utente, ordenado por data mais aintiga
 SELECT	v.id AS idVisita,
